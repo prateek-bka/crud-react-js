@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,8 +10,32 @@ import {
 } from "@/components/ui/table";
 import { FaUserEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { toast } from "sonner";
 
-const ListUsers = ({ allUsers, setAllUsers, user, setUser, isOpen, setIsOpen }) => {
+const ListUsers = ({ allUsers, setAllUsers, user, setUser, isTaskOpen, setIsTaskOpen }) => {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [confirmDeleteUser, setConfirmDeleteUser] = useState(false);
+  const [confirmDeleteUserDetails, setConfirmDeleteUserDetails] = useState({});
+
+  const handleDeleteUser = () => {
+    // console.log("confirmDeleteUserDetails", confirmDeleteUserDetails);
+    const updateUserList = allUsers.filter((item) => item.id !== confirmDeleteUserDetails.id);
+    // console.log("updateUserList", updateUserList);
+    setAllUsers(updateUserList);
+  };
+
   return (
     <div>
       <div className="p-4">
@@ -37,8 +61,17 @@ const ListUsers = ({ allUsers, setAllUsers, user, setUser, isOpen, setIsOpen }) 
                   <TableCell>{el.address}</TableCell>
                   <TableCell>
                     <div className="flex gap-4 text-xl">
-                      <FaUserEdit className="hover:text-blue-700 hover:cursor-pointer" />
-                      <MdDeleteForever className="hover:text-red-700 hover:cursor-pointer" />
+                      <FaUserEdit
+                        className="hover:text-blue-700 hover:cursor-pointer"
+                        onClick={() => handleEditUser()}
+                      />
+                      <MdDeleteForever
+                        className="hover:text-red-700 hover:cursor-pointer"
+                        onClick={() => {
+                          setIsDeleteDialogOpen(true);
+                          setConfirmDeleteUserDetails(el);
+                        }}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -46,6 +79,32 @@ const ListUsers = ({ allUsers, setAllUsers, user, setUser, isOpen, setIsOpen }) 
           </TableBody>
         </Table>
       </div>
+
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        {" "}
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Delete User</DialogTitle>
+            <DialogDescription>Are you sure you want to delete the user?</DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              onClick={() => {
+                setIsDeleteDialogOpen(false);
+                setConfirmDeleteUser(true);
+                handleDeleteUser();
+              }}
+            >
+              Delete User
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

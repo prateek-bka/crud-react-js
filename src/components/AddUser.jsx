@@ -13,10 +13,10 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 
-const AddTask = ({ isOpen, setIsOpen }) => {
+const AddUser = ({ isTaskOpen, setIsTaskOpen }) => {
   return (
     <div>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog open={isTaskOpen} onOpenChange={setIsTaskOpen}>
         <form>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -46,4 +46,4 @@ const AddTask = ({ isOpen, setIsOpen }) => {
   );
 };
 
-export default AddTask;
+export default AddUser;

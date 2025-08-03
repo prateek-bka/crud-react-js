@@ -1,36 +1,53 @@
 import React, { useState } from "react";
 import Heading from "./components/Heading";
-import AddTask from "./components/AddTask";
 import { Button } from "./components/ui/button";
 import ListUsers from "./components/ListUsers";
+import { Toaster } from "@/components/ui/sonner";
+import AddUser from "./components/AddUser";
 
 const App = () => {
   const [allUsers, setAllUsers] = useState([
     {
-      name: "dahfai",
-      email: "akhflasjf",
-      role: "dkaslhfla",
-      address: "dfgahlf",
+      id: 235125,
+      name: "user 1",
+      email: "user1@gmail.com",
+      role: "manager",
+      address: "address 1",
+    },
+    {
+      id: 235123,
+      name: "user 2",
+      email: "user2@gmail.com",
+      role: "developer",
+      address: "address 2",
+    },
+    {
+      id: 235147,
+      name: "user 3",
+      email: "user3@gmail.com",
+      role: "devops",
+      address: "address 3",
     },
   ]);
   const [user, setUser] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
+  const [isTaskOpen, setIsTaskOpen] = useState(false);
 
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-200">
       <Heading />
+      <Toaster />
       <div className="flex items-end justify-end m-4">
-        <Button className="hover:cursor-pointer" onClick={() => setIsOpen(true)}>
+        <Button className="hover:cursor-pointer" onClick={() => setIsTaskOpen(true)}>
           Add Task
         </Button>
       </div>
-      <AddTask
+      <AddUser
         allUsers={allUsers}
         setAllUsers={setAllUsers}
         user={user}
         setUser={setUser}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        isTaskOpen={isTaskOpen}
+        setIsTaskOpen={setIsTaskOpen}
       />
 
       <ListUsers
@@ -38,8 +55,8 @@ const App = () => {
         setAllUsers={setAllUsers}
         user={user}
         setUser={setUser}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        isTaskOpen={isTaskOpen}
+        setIsTaskOpen={setIsTaskOpen}
       />
     </div>
   );
