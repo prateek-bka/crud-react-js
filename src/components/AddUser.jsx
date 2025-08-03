@@ -13,7 +13,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 
-const AddUser = ({ isTaskOpen, setIsTaskOpen }) => {
+const AddUser = ({ allUsers, setAllUsers, user, setUser, isTaskOpen, setIsTaskOpen }) => {
   return (
     <div>
       <Dialog open={isTaskOpen} onOpenChange={setIsTaskOpen}>

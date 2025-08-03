@@ -34,6 +34,10 @@ const ListUsers = ({ allUsers, setAllUsers, user, setUser, isTaskOpen, setIsTask
     setUser({});
   };
 
+  const handleEditUser = (el) => {
+    setUser(el);
+    setIsTaskOpen(true);
+  };
   return (
     <div>
       <div className="p-4">
@@ -61,7 +65,7 @@ const ListUsers = ({ allUsers, setAllUsers, user, setUser, isTaskOpen, setIsTask
                     <div className="flex gap-4 text-xl">
                       <FaUserEdit
                         className="hover:text-blue-700 hover:cursor-pointer"
-                        onClick={() => handleEditUser()}
+                        onClick={() => handleEditUser(el)}
                       />
                       <MdDeleteForever
                         className="hover:text-red-700 hover:cursor-pointer"
