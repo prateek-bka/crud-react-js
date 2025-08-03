@@ -20,20 +20,18 @@ import {
   DialogTitle,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
 import { toast } from "sonner";
 
 const ListUsers = ({ allUsers, setAllUsers, user, setUser, isTaskOpen, setIsTaskOpen }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [confirmDeleteUser, setConfirmDeleteUser] = useState(false);
-  const [confirmDeleteUserDetails, setConfirmDeleteUserDetails] = useState({});
 
   const handleDeleteUser = () => {
-    // console.log("confirmDeleteUserDetails", confirmDeleteUserDetails);
-    const updateUserList = allUsers.filter((item) => item.id !== confirmDeleteUserDetails.id);
+    // console.log("user", user);
+    const updateUserList = allUsers.filter((item) => item.id !== user.id);
     // console.log("updateUserList", updateUserList);
     setAllUsers(updateUserList);
+    toast(`Success! ${user.name} has been deleted!`);
+    setUser({});
   };
 
   return (
@@ -69,7 +67,7 @@ const ListUsers = ({ allUsers, setAllUsers, user, setUser, isTaskOpen, setIsTask
                         className="hover:text-red-700 hover:cursor-pointer"
                         onClick={() => {
                           setIsDeleteDialogOpen(true);
-                          setConfirmDeleteUserDetails(el);
+                          setUser(el);
                         }}
                       />
                     </div>
@@ -90,13 +88,14 @@ const ListUsers = ({ allUsers, setAllUsers, user, setUser, isTaskOpen, setIsTask
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" onClick={() => setUser({})}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button
               type="submit"
               onClick={() => {
                 setIsDeleteDialogOpen(false);
-                setConfirmDeleteUser(true);
                 handleDeleteUser();
               }}
             >
